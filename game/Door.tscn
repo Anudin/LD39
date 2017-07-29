@@ -6,12 +6,12 @@
 [ext_resource path="res://cloth1.smp" type="Sample" id=4]
 [ext_resource path="res://you_lose.wav" type="Sample" id=5]
 
-[sub_resource type="RectangleShape2D" id=2]
+[sub_resource type="RectangleShape2D" id=1]
 
 custom_solver_bias = 0.0
-extents = Vector2( 97.0751, 166.483 )
+extents = Vector2( 56.0408, 97.1193 )
 
-[sub_resource type="SampleLibrary" id=1]
+[sub_resource type="SampleLibrary" id=2]
 
 samples/cloth1 = {
 "db": 0.0,
@@ -30,8 +30,8 @@ samples/you_lose = {
 
 transform/pos = Vector2( -0.0042038, -0.0991516 )
 input/pickable = true
-shapes/0/shape = SubResource( 2 )
-shapes/0/transform = Matrix32( 1, 0, 0, 1, 2, -166 )
+shapes/0/shape = SubResource( 1 )
+shapes/0/transform = Matrix32( 1, 0, 0, 1, 1.18549, -99.2105 )
 shapes/0/trigger = false
 gravity_vec = Vector2( 0, 1 )
 gravity = 98.0
@@ -39,16 +39,25 @@ linear_damp = 0.1
 angular_damp = 1.0
 script/script = ExtResource( 1 )
 
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+
+transform/pos = Vector2( 1.18549, -99.2105 )
+shape = SubResource( 1 )
+trigger = false
+_update_shape_index = 0
+
 [node name="Open" type="Sprite" parent="."]
 
 visibility/visible = false
 transform/pos = Vector2( -0.0488052, -0.160461 )
+transform/scale = Vector2( 0.6, 0.6 )
 texture = ExtResource( 2 )
 offset = Vector2( -45.1067, -150.5 )
 
 [node name="Close" type="Sprite" parent="."]
 
 transform/pos = Vector2( 0.102165, 0.140198 )
+transform/scale = Vector2( 0.6, 0.6 )
 texture = ExtResource( 3 )
 offset = Vector2( -0.225395, -165.509 )
 
@@ -62,15 +71,8 @@ params/attenuation/min_distance = 1.0
 params/attenuation/max_distance = 2048.0
 params/attenuation/distance_exp = 1.0
 config/polyphony = 1
-config/samples = SubResource( 1 )
+config/samples = SubResource( 2 )
 config/pitch_random = 0.0
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-
-transform/pos = Vector2( 2, -166 )
-shape = SubResource( 2 )
-trigger = false
-_update_shape_index = 0
 
 [connection signal="input_event" from="." to="." method="_on_Door_input_event"]
 

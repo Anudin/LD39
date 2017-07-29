@@ -6,7 +6,7 @@
 [sub_resource type="Animation" id=1]
 
 resource/name = "light_flicker"
-length = 0.5
+length = 1.0
 loop = false
 step = 0.1
 tracks/0/type = "value"
@@ -14,7 +14,7 @@ tracks/0/path = NodePath(".:color")
 tracks/0/interp = 1
 tracks/0/imported = false
 tracks/0/keys = {
-"times": FloatArray( 0, 0.2, 0.5 ),
+"times": FloatArray( 0, 0.5, 1 ),
 "transitions": FloatArray( 1, 1, 1 ),
 "update": 0,
 "values": [ Color( 0, 0, 0, 1 ), Color( 1, 1, 1, 1 ), Color( 0, 0, 0, 1 ) ]
