@@ -1,0 +1,36 @@
+[gd_scene load_steps=5 format=1]
+
+[ext_resource path="res://door.png" type="Texture" id=1]
+[ext_resource path="res://Door.gd" type="Script" id=2]
+[ext_resource path="res://cloth1.wav" type="Sample" id=3]
+
+[sub_resource type="SampleLibrary" id=1]
+
+samples/cloth1 = {
+"db": 0.0,
+"pitch": 1.0,
+"priority": 0,
+"sample": ExtResource( 3 )
+}
+
+[node name="Door" type="Sprite"]
+
+transform/pos = Vector2( -0.0042038, -0.0991516 )
+texture = ExtResource( 1 )
+offset = Vector2( 0.196091, -165.088 )
+script/script = ExtResource( 2 )
+
+[node name="SoundEffectPlayer" type="SamplePlayer2D" parent="."]
+
+transform/pos = Vector2( 0.179031, -165.088 )
+z/z = 1
+params/volume_db = 0.0
+params/pitch_scale = 1.0
+params/attenuation/min_distance = 1.0
+params/attenuation/max_distance = 2048.0
+params/attenuation/distance_exp = 1.0
+config/polyphony = 1
+config/samples = SubResource( 1 )
+config/pitch_random = 0.0
+
+

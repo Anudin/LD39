@@ -1,16 +1,17 @@
 extends Node2D
 
-onready var sound_left = get_node("SoundLeft")
-onready var sound_center = get_node("SoundCenter")
-onready var sound_right = get_node("SoundRight")
+var door_scn = preload("Door.tscn")
+
+onready var spawns = get_node("Spawns")
 
 func _ready():
+	for child in spawns.get_children():
+		var door = door_scn.instance()
+		door.set_pos(child.get_pos())
+		door.hunted = true
+		add_child(door)
+	
 	set_process(true)
 
 func _process(delta):
-	if Input.is_action_pressed("play_left_sound"):
-		sound_left.play("sample_sound_effect")
-	elif Input.is_action_pressed("play_center_sound"):
-		sound_center.play("sample_sound_effect")
-	elif Input.is_action_pressed("play_right_sound"):
-		sound_right.play("sample_sound_effect")
+	pass

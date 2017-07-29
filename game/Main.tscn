@@ -1,55 +1,32 @@
 [gd_scene load_steps=4 format=1]
 
 [ext_resource path="res://Main.gd" type="Script" id=1]
-[ext_resource path="res://cloth1.wav" type="Sample" id=2]
+[ext_resource path="res://background.png" type="Texture" id=2]
+[ext_resource path="res://Flashlight.tscn" type="PackedScene" id=3]
 
-[sub_resource type="SampleLibrary" id=1]
-
-samples/sample_sound_effect = {
-"db": 0.0,
-"pitch": 1.0,
-"priority": 0,
-"sample": ExtResource( 2 )
-}
-
-[node name="Main" type="Node2D"]
+[node name="2DScene" type="Node2D"]
 
 script/script = ExtResource( 1 )
 
-[node name="SoundLeft" type="SamplePlayer2D" parent="."]
+[node name="Background" type="Sprite" parent="."]
 
-transform/pos = Vector2( 101, 276 )
-params/volume_db = 0.0
-params/pitch_scale = 1.0
-params/attenuation/min_distance = 1.0
-params/attenuation/max_distance = 2048.0
-params/attenuation/distance_exp = 1.0
-config/polyphony = 1
-config/samples = SubResource( 1 )
-config/pitch_random = 0.0
+texture = ExtResource( 2 )
+centered = false
 
-[node name="SoundCenter" type="SamplePlayer2D" parent="."]
+[node name="Spawns" type="Node2D" parent="."]
 
-transform/pos = Vector2( 513, 275 )
-params/volume_db = 0.0
-params/pitch_scale = 1.0
-params/attenuation/min_distance = 1.0
-params/attenuation/max_distance = 2048.0
-params/attenuation/distance_exp = 1.0
-config/polyphony = 1
-config/samples = SubResource( 1 )
-config/pitch_random = 0.0
+[node name="Spawn1" type="Position2D" parent="Spawns"]
 
-[node name="SoundRight" type="SamplePlayer2D" parent="."]
+transform/pos = Vector2( 335.533, 670 )
 
-transform/pos = Vector2( 909, 276 )
-params/volume_db = 0.0
-params/pitch_scale = 1.0
-params/attenuation/min_distance = 1.0
-params/attenuation/max_distance = 2048.0
-params/attenuation/distance_exp = 1.0
-config/polyphony = 1
-config/samples = SubResource( 1 )
-config/pitch_random = 0.0
+[node name="Spawn2" type="Position2D" parent="Spawns"]
+
+transform/pos = Vector2( 642.03, 670 )
+
+[node name="Spawn3" type="Position2D" parent="Spawns"]
+
+transform/pos = Vector2( 942.34, 670 )
+
+[node name="Flashlight" parent="." instance=ExtResource( 3 )]
 
 
