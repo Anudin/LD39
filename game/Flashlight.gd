@@ -8,5 +8,11 @@ func _ready():
 	set_process_unhandled_input(true)
 
 func _unhandled_input(event):
-	if not event.is_echo() and event.is_action("use_flashlight"):
-		animation_player.play("light_flicker")
+	#if not animation_player.is_playing() and event.is_action("use"):
+	pass
+
+func toggle_on():
+	animation_player.play("light_flicker")
+
+func on_monster_arrived():
+	animation_player.play("light_flicker_to_on")
