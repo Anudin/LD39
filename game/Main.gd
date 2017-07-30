@@ -3,10 +3,14 @@
 
 # flashlight mechanic
 
+# visuals might be influenced by the level layout!
+# pixel art or krita?
 # Add level visuals / connector visuals
 # Monster visuals
 
 # Sound
+
+# Restart at level begin instead of complete beginning
 
 extends Node2D
 
@@ -22,9 +26,9 @@ var room = 0
 # Format: [number_of_doors, use_upper_area, rooms_per_level, monster_speed]
 var level_data=[[2, false, 3, 3],
 				[3, false, 5, 3],
-				[3, true, 5, 3],
-				[4, true, 5, 3],
-				[5, true, 5, 3]]
+				[3, true, 5, 2],
+				[4, true, 10, 2],
+				[5, true, 15, 2]]
 
 func _ready():
 	randomize()
@@ -71,7 +75,9 @@ func generate_level():
 	
 	# Let a random door be hunted
 	var entrances = entrances_container.get_children()
-	entrances[prev_child_count + randi() % level_data[level][0]].hunted = true
+	var hunted_index = prev_child_count + randi() % level_data[level][0]
+	entrances[hunted_index].hunted = true
+	entrances[hunted_index].approaching_time = level_data[level][3]
 	
 	# Show level
 	flashlight.toggle_on()

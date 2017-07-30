@@ -8,10 +8,9 @@ func _ready():
 	set_process_unhandled_input(true)
 
 func _unhandled_input(event):
-	#if not animation_player.is_playing() and event.is_action("use"):
-		#animation_player.play("light_flicker")
-		# penalty
-	pass
+	if not animation_player.is_playing() and event.is_action("use"):
+		animation_player.play("light_flicker")
+		#penalty
 
 func toggle_on():
 	animation_player.play("light_flicker")

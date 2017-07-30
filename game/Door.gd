@@ -8,7 +8,9 @@ onready var sprite_close = get_node("Close")
 onready var sound_effect_player = get_node("SoundEffectPlayer")
 
 var hunted = false
-var approaching_vol = -25
+var approaching_time = 3
+var approaching_start = -25
+var approaching_current = -25
 
 func _ready():
 	set_process(true)
@@ -18,14 +20,12 @@ func _process(delta):
 		if not sound_effect_player.is_voice_active(0):
 			sound_effect_player.play("cloth1")
 		else:
-			# Formula:
-			# start_db / seconds_to_full * delta
-			approaching_vol += 25 / 3 * delta
+			approaching_current -= approaching_start / approaching_time * delta
 			
-			if approaching_vol >= 0:
+			if approaching_current >= 0:
 				unleash()
 			
-			sound_effect_player.voice_set_volume_scale_db(0, approaching_vol)
+			sound_effect_player.voice_set_volume_scale_db(0, approaching_current)
 
 func unleash():
 	sound_effect_player.stop_all()
