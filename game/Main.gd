@@ -1,3 +1,5 @@
+# something very bad happens if you click too fast...
+
 # Monster visuals
 
 # Sound
@@ -45,6 +47,10 @@ func _ready():
 	randomize()
 	
 	show_level_screen()
+	set_fixed_process(true)
+
+func _fixed_process(delta):
+	get_node("HUD/Batterie").set_value(flashlight.batterie)
 
 func generate_level():
 	room += 1

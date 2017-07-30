@@ -2,6 +2,9 @@ extends Light2D
 
 onready var anim = get_node("AnimationPlayer")
 
+export var batterie_length = 3
+var batterie = 100
+
 var on = false
 var follow = false
 
@@ -10,11 +13,19 @@ func _ready():
 	set_process_unhandled_input(true)
 
 func _process(delta):
+	if on:
+		batterie -= delta * (100 / batterie_length)
+		
+		if batterie <= 0:
+			batterie = 0
+			on = false
+			anim.play("light_off")
+	
 	if follow:
 		set_pos(get_global_mouse_pos())
 
 func _unhandled_input(event):
-	if event.is_action_pressed("use"):
+	if event.is_action_pressed("use") and batterie > 0:
 		if on:
 			on = false
 			anim.play("light_off")
@@ -28,3 +39,6 @@ func _on_AnimationPlayer_animation_started( name ):
 
 func _on_AnimationPlayer_finished():
 	follow = true
+
+func refill_batteries():
+	batterie = 100
