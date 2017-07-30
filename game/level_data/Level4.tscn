@@ -1,0 +1,39 @@
+[gd_scene load_steps=3 format=1]
+
+[ext_resource path="res://level_data/Level4.gd" type="Script" id=1]
+[ext_resource path="res://level_data/backgrounds/level1_back.png" type="Texture" id=2]
+
+[node name="Level" type="Node2D"]
+
+script/script = ExtResource( 1 )
+
+[node name="Background" type="Sprite" parent="."]
+
+texture = ExtResource( 2 )
+centered = false
+
+[node name="Spawns" type="Node2D" parent="."]
+
+[node name="Spawn1" type="Position2D" parent="Spawns"]
+
+transform/pos = Vector2( 92, 688 )
+
+[node name="Spawn2" type="Position2D" parent="Spawns"]
+
+transform/pos = Vector2( 652, 688 )
+
+[node name="Spawn3" type="Position2D" parent="Spawns"]
+
+transform/pos = Vector2( 1188, 688 )
+
+[node name="Spawn4" type="Position2D" parent="Spawns"]
+
+transform/pos = Vector2( 356, 376 )
+
+[node name="Spawn5" type="Position2D" parent="Spawns"]
+
+transform/pos = Vector2( 924, 376 )
+
+[node name="Entrances" type="Node2D" parent="."]
+
+

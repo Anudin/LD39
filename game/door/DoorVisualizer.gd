@@ -5,7 +5,9 @@ var door_scn = preload("Door.tscn")
 
 func _ready():
 	if get_tree().is_editor_hint():
-		for child in get_children():
+		var container = get_parent().get_node("Spawns")
+		
+		for child in container:
 			var door = door_scn.instance()
 			doors.append(door)
 			add_child(door)
@@ -13,8 +15,6 @@ func _ready():
 		set_process(true)
 
 func _process(delta):
-	print("")
-	
 	for i in range(doors.size()):
 		var door = doors[i]
 		

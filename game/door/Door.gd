@@ -18,9 +18,10 @@ func _ready():
 func _process(delta):
 	if hunted:
 		if not sound_effect_player.is_voice_active(0):
-			sound_effect_player.play("cloth1")
+			#sound_effect_player.play("steps")
+			pass
 		else:
-			approaching_current -= approaching_start / approaching_time * delta
+			#approaching_current -= approaching_start / approaching_time * delta
 			
 			if approaching_current >= 0:
 				unleash()
@@ -29,7 +30,7 @@ func _process(delta):
 
 func unleash():
 	sound_effect_player.stop_all()
-	sound_effect_player.play("you_lose")
+	sound_effect_player.play("monster_voice")
 	hunted = false
 	toggle_state()
 	emit_signal("monster_arrived")
