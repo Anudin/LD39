@@ -63,10 +63,10 @@ func mouse_over_door():
 	var diff = collider.get_global_pos() - get_global_mouse_pos()
 	
 	# Collider spans 60 x 100
-	if abs(diff.x) <= 30 and abs(diff.y) <= 50:
+	if abs(diff.x) <= 60 and abs(diff.y) <= 100:
 		return true
 	
-	#print("Trying to open door with: ", diff)
+	print("Trying to open door with: ", diff)
 	
 	return false
 
