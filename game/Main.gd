@@ -12,7 +12,8 @@ var level_data = [preload("level_data/Level1.tscn"),
 					preload("level_data/Level2.tscn"),
 					preload("level_data/Level3.tscn"),
 					preload("level_data/Level4.tscn"),
-					preload("level_data/Level5.tscn")]
+					preload("level_data/Level5.tscn"),
+					preload("level_data/Outro.tscn")]
 
 onready var level_inst
 
@@ -21,6 +22,13 @@ var room = 0
 
 func _ready():
 	randomize()
+	
+	# Remove dummie level
+	var demo_level = get_node("Level")
+	demo_level.queue_free()
+	remove_child(demo_level)
+	
+	get_node("GUI/Batterie").set_value(flashlight.batterie)
 	
 	show_level_screen()
 	
@@ -37,8 +45,8 @@ func generate_level():
 	print("generating")
 	
 	room += 1
-	flashlight.flash()
 	flashlight.force_out()
+	flashlight.flash()
 	
 	if room > level_inst.rooms_per_level and not level == level_data.size() - 1:
 		level += 1
@@ -86,6 +94,8 @@ func on_monster_arrived():
 	show_level_screen(true)
 	
 func show_level_screen(monster_arrived = false):
+	flashlight.hide()
+	
 	level_screen.get_node("LevelScreenLabel").set_text("LEVEL " + str(level + 1))
 	level_screen.show()
 	
@@ -96,7 +106,7 @@ func show_level_screen(monster_arrived = false):
 
 func restart():
 	print("Starting level")
-	
+	flashlight.show()
 	get_node("SamplePlayer2D").stop_all()
 	
 	load_level()
@@ -105,9 +115,11 @@ func restart():
 
 func load_level():
 	# Remove last level
-	var current_level = get_node("Level")
-	current_level.queue_free()
-	remove_child(current_level)
+	if has_node("Level"):
+		var current_level = get_node("Level")
+	
+		current_level.queue_free()
+		remove_child(current_level)
 	
 	# Add new level
 	level_inst = level_data[level].instance()

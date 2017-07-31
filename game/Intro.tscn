@@ -1,0 +1,60 @@
+[gd_scene load_steps=4 format=1]
+
+[ext_resource path="res://Intro.gd" type="Script" id=1]
+[ext_resource path="res://ReenieBeanie.fnt" type="BitmapFont" id=2]
+[ext_resource path="res://Dark_Rainy_Night(ambience).ogg" type="AudioStream" id=3]
+
+[node name="Intro" type="Node2D"]
+
+script/script = ExtResource( 1 )
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 50.0
+margin/top = 30.0
+margin/right = 1230.0
+margin/bottom = 630.0
+custom_fonts/normal_font = ExtResource( 2 )
+bbcode/enabled = false
+bbcode/bbcode = "It's 10 PM and you're sitting on your bed reading a book.
+Actually it's not just any book it's THE book. The holy bible.
+Your family is strictly religious and you know they couldn't
+live with the thought of you turning against god - so you play along.
+Even if it feels wrong. You'd never admit it but going to church or reading the bible always makes you feel physically sick...
+\"Unfortunatly\" your reading gets interrupted by a power outage - which is nothing uncommon in your area - so you grab your flashlight and realize that something is different...
+You can't open your eyes! You try to blink and for a very short time you see light. Am I dreaming? This has to be a dream. You turn on the flashlight and notice that you can see anything in its light - but what you see isn't what you expected."
+visible_characters = -1
+
+[node name="ClickAnywhere" type="Label" parent="."]
+
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 0
+margin/left = 700.0
+margin/top = 630.0
+margin/right = 1090.0
+margin/bottom = 684.0
+custom_fonts/font = ExtResource( 2 )
+custom_colors/font_color = Color( 0.808594, 0.227417, 0.227417, 1 )
+text = "Click anywhere to start"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="StreamPlayer" type="StreamPlayer" parent="."]
+
+stream/stream = ExtResource( 3 )
+stream/play = false
+stream/loop = true
+stream/volume_db = 0.0
+stream/autoplay = true
+stream/paused = false
+stream/loop_restart_time = 0.0
+stream/buffering_ms = 500
+
+
