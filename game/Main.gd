@@ -32,6 +32,7 @@ func _fixed_process(delta):
 func generate_level():
 	room += 1
 	floodlight.flash()
+	flashlight.force_out()
 	
 	if room > level_inst.rooms_per_level and not level == level_data.size() - 1:
 		level += 1
@@ -72,28 +73,28 @@ func generate_level():
 	entrances[hunted_index].approaching_time = level_inst.monster_speed
 
 func on_monster_arrived():
+	get_node("SamplePlayer2D").play("game_over")
 	room = 0
 	flashlight.refill_batteries()
 	
-	show_level_screen()
+	show_level_screen(true)
 	
-func show_level_screen():
-	#floodlight.hide()
-	#flashlight.hide()
-	
+func show_level_screen(monster_arrived = false):
 	level_screen.get_node("LevelScreenLabel").set_text("LEVEL " + str(level + 1))
 	level_screen.show()
-	get_node("SamplePlayer2D").play("churchbell")
+	
+	if not monster_arrived:
+		get_node("SamplePlayer2D").play("churchbell")
 	
 	get_tree().set_pause(true)
 
 func restart():
 	print("Starting level")
 	
+	get_node("SamplePlayer2D").stop_all()
+	
 	load_level()
 	get_tree().set_pause(false)
-	#floodlight.show()
-	#flashlight.show()
 	floodlight.flash()
 
 func load_level():

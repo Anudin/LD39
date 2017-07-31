@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=1]
+[gd_scene load_steps=22 format=1]
 
 [ext_resource path="res://Main.gd" type="Script" id=1]
 [ext_resource path="res://level_data/backgrounds/lightmap.png" type="Texture" id=2]
@@ -13,7 +13,8 @@
 [ext_resource path="res://flashlight_click_on.wav" type="Sample" id=11]
 [ext_resource path="res://level_data/Level1.tscn" type="PackedScene" id=12]
 [ext_resource path="res://churchbell.wav" type="Sample" id=13]
-[ext_resource path="res://Myst.ogg" type="AudioStream" id=14]
+[ext_resource path="res://game_over.wav" type="Sample" id=14]
+[ext_resource path="res://Myst.ogg" type="AudioStream" id=15]
 
 [sub_resource type="StyleBoxFlat" id=6]
 
@@ -102,6 +103,12 @@ samples/churchbell = {
 "priority": 0,
 "sample": ExtResource( 13 )
 }
+samples/game_over = {
+"db": 0.0,
+"pitch": 1.0,
+"priority": 0,
+"sample": ExtResource( 14 )
+}
 
 [node name="Main" type="Node2D"]
 
@@ -109,6 +116,7 @@ script/script = ExtResource( 1 )
 
 [node name="GUI" type="CanvasLayer" parent="."]
 
+editor/display_folded = true
 layer = 1
 offset = Vector2( 0, 0 )
 rotation = 0.0
@@ -181,6 +189,7 @@ max_lines_visible = -1
 
 [node name="Floodlight" type="Light2D" parent="."]
 
+editor/display_folded = true
 transform/pos = Vector2( 640, 360 )
 enabled = true
 editor_only = false
@@ -281,7 +290,7 @@ config/pitch_random = 0.0
 
 [node name="StreamPlayer" type="StreamPlayer" parent="."]
 
-stream/stream = ExtResource( 14 )
+stream/stream = ExtResource( 15 )
 stream/play = false
 stream/loop = true
 stream/volume_db = 0.0

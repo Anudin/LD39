@@ -32,7 +32,7 @@ func _process(delta):
 
 func unleash():
 	sound_effect_player.stop_all()
-	sound_effect_player.play("monster_voice")
+	sound_effect_player.play("open_door")
 	hunted = false
 	toggle_state()
 	emit_signal("monster_arrived")

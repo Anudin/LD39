@@ -1,9 +1,11 @@
-[gd_scene load_steps=7 format=1]
+[gd_scene load_steps=9 format=1]
 
 [ext_resource path="res://door/Door.gd" type="Script" id=1]
-[ext_resource path="res://door/door_open.png" type="Texture" id=2]
+[ext_resource path="res://level_data/entrances/level1_door_open.png" type="Texture" id=2]
 [ext_resource path="res://level_data/entrances/level1_door_closed.png" type="Texture" id=3]
-[ext_resource path="res://door/steps.smp" type="Sample" id=4]
+[ext_resource path="res://game_over.wav" type="Sample" id=4]
+[ext_resource path="res://door/qubodup-DoorOpen03.wav" type="Sample" id=5]
+[ext_resource path="res://door/steps.smp" type="Sample" id=6]
 
 [sub_resource type="RectangleShape2D" id=1]
 
@@ -12,11 +14,23 @@ extents = Vector2( 60, 100 )
 
 [sub_resource type="SampleLibrary" id=2]
 
-samples/steps = {
+samples/monster_voice = {
 "db": 0.0,
 "pitch": 1.0,
 "priority": 0,
 "sample": ExtResource( 4 )
+}
+samples/open_door = {
+"db": 0.0,
+"pitch": 1.0,
+"priority": 0,
+"sample": ExtResource( 5 )
+}
+samples/steps = {
+"db": 0.0,
+"pitch": 1.0,
+"priority": 0,
+"sample": ExtResource( 6 )
 }
 
 [node name="Door" type="Area2D"]
@@ -42,10 +56,9 @@ _update_shape_index = 0
 [node name="Open" type="Sprite" parent="."]
 
 visibility/visible = false
-transform/pos = Vector2( -0.0488052, -0.160461 )
-transform/scale = Vector2( 0.6, 0.6 )
+transform/pos = Vector2( 0.0042038, 0.0991516 )
 texture = ExtResource( 2 )
-offset = Vector2( -45.1067, -150.5 )
+offset = Vector2( -0.106701, -90.5 )
 
 [node name="Close" type="Sprite" parent="."]
 

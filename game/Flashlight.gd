@@ -47,3 +47,8 @@ func _on_AnimationPlayer_finished():
 
 func refill_batteries():
 	batterie = 100
+	force_out()
+
+func force_out():
+	on = false
+	set_color(Color(0))
