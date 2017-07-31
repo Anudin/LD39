@@ -1,0 +1,70 @@
+<?xml version="1.0" standalone="no" ?>
+<!DOCTYPE project PUBLIC "-//audacityproject-1.3.0//DTD//EN" "http://audacity.sourceforge.net/xml/audacityproject-1.3.0.dtd" >
+<project xmlns="http://audacity.sourceforge.net/xml/" projname="game_over_fix_data" version="1.3.0" audacityversion="2.1.2" sel0="0.0000000000" sel1="0.0000000000" vpos="0" h="0.0000000000" zoom="82.9683158382" rate="44100.0" snapto="off" selectionformat="hh:mm:ss + milliseconds" frequencyformat="Hz" bandwidthformat="octaves">
+	<tags>
+		<tag name="GENRE" value="Other"/>
+		<tag name="ALBUM" value="Public Domain"/>
+		<tag name="TITLE" value="The Field Of Dreams"/>
+		<tag name="ARTIST" value="Paulius Jurgelevièius"/>
+	</tags>
+	<wavetrack name="horror-go" channel="0" linked="1" mute="1" solo="0" height="150" minimized="0" isSelected="0" rate="44100" gain="1.0" pan="0.0">
+		<waveclip offset="0.34952393">
+			<sequence maxsamples="262144" sampleformat="262159" numsamples="144000">
+				<waveblock start="0">
+					<simpleblockfile filename="e000021c.au" len="144000" min="-0.882812" max="1.0" rms="0.078762"/>
+				</waveblock>
+			</sequence>
+			<envelope numpoints="0"/>
+		</waveclip>
+	</wavetrack>
+	<wavetrack name="horror-go" channel="1" linked="0" mute="1" solo="0" height="150" minimized="0" isSelected="0" rate="44100" gain="1.0" pan="0.0">
+		<waveclip offset="0.34952393">
+			<sequence maxsamples="262144" sampleformat="262159" numsamples="144000">
+				<waveblock start="0">
+					<simpleblockfile filename="e00008fb.au" len="144000" min="-0.844649" max="0.958505" rms="0.078587"/>
+				</waveblock>
+			</sequence>
+			<envelope numpoints="0"/>
+		</waveclip>
+	</wavetrack>
+	<wavetrack name="Tonspur" channel="0" linked="1" mute="0" solo="0" height="150" minimized="0" isSelected="1" rate="44100" gain="1.0" pan="0.0">
+		<waveclip offset="0.80752846">
+			<sequence maxsamples="262144" sampleformat="262159" numsamples="121144">
+				<waveblock start="0">
+					<simpleblockfile filename="e00006a5.au" len="121144" min="-0.967367" max="0.869937" rms="0.073118"/>
+				</waveblock>
+			</sequence>
+			<envelope numpoints="0"/>
+		</waveclip>
+	</wavetrack>
+	<wavetrack name="Tonspur" channel="1" linked="0" mute="0" solo="0" height="150" minimized="0" isSelected="1" rate="44100" gain="1.0" pan="0.0">
+		<waveclip offset="0.80752846">
+			<sequence maxsamples="262144" sampleformat="262159" numsamples="121144">
+				<waveblock start="0">
+					<simpleblockfile filename="e0000d9d.au" len="121144" min="-0.982521" max="0.88208" rms="0.074119"/>
+				</waveblock>
+			</sequence>
+			<envelope numpoints="0"/>
+		</waveclip>
+	</wavetrack>
+	<wavetrack name="the_field_of_dreams" channel="0" linked="1" mute="0" solo="0" height="150" minimized="0" isSelected="0" rate="44100" gain="1.0" pan="0.0">
+		<waveclip offset="0.00000000">
+			<sequence maxsamples="262144" sampleformat="262159" numsamples="232278">
+				<waveblock start="0">
+					<simpleblockfile filename="e00007b2.au" len="232278" min="-0.120406" max="0.112087" rms="0.016343"/>
+				</waveblock>
+			</sequence>
+			<envelope numpoints="0"/>
+		</waveclip>
+	</wavetrack>
+	<wavetrack name="the_field_of_dreams" channel="1" linked="0" mute="0" solo="0" height="150" minimized="0" isSelected="0" rate="44100" gain="1.0" pan="0.0">
+		<waveclip offset="0.00000000">
+			<sequence maxsamples="262144" sampleformat="262159" numsamples="232278">
+				<waveblock start="0">
+					<simpleblockfile filename="e0000f23.au" len="232278" min="-0.19301" max="0.193716" rms="0.036361"/>
+				</waveblock>
+			</sequence>
+			<envelope numpoints="0"/>
+		</waveclip>
+	</wavetrack>
+</project>

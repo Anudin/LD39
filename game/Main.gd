@@ -26,11 +26,6 @@ var hunted
 func _ready():
 	randomize()
 	
-	# Remove dummie level
-	var demo_level = get_node("Level")
-	demo_level.queue_free()
-	remove_child(demo_level)
-	
 	get_node("GUI/Batterie").set_value(flashlight.batterie)
 	
 	show_level_screen()

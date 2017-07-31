@@ -1,4 +1,16 @@
-Levelscreen background is a variation of:
-dirt1_brown_qubodup_Lamoot_ccby3.png by qubodup <http://opengameart.org/users/qubodup>
-licensed under ccby3 <http://creativecommons.org/licenses/by/3.0/> 
-based on <http://opengameart.org/node/7805> by Lamoot <http://opengameart.org/users/lamoot>
+Fonts (SIL Open Font License 1.1):
+Reenie Beanie
+Zilla Slab Highlight
+
+All music and sound effects were obtained from OpenGameArt.
+
+Music (CC0):
+Waking the devil by Alexander Ehlers
+The Field of Dreams by Paulius Jurgelevièius (aka pauliuw)
+
+Music (CC-BY 3.0):
+Myst by Zhelanov
+Scary by Cafofo
+
+Sound Effects (CC-BY-SA 3.0):
+Churchbell: Copyrght 2008-2010 Ulrich Metzner
