@@ -3,6 +3,7 @@ extends Node2D
 signal used_door
 signal monster_arrived
 
+onready var collider = get_node("CollisionShape2D")
 onready var sprite_open = get_node("Open")
 onready var sprite_close = get_node("Close")
 onready var sound_effect_player = get_node("SoundEffectPlayer")
@@ -14,14 +15,15 @@ var approaching_current = -25
 
 func _ready():
 	set_process(true)
+	set_process_input(true)
 
 func _process(delta):
 	if hunted:
 		if not sound_effect_player.is_voice_active(0):
-			#sound_effect_player.play("steps")
+			sound_effect_player.play("steps")
 			pass
 		else:
-			#approaching_current -= approaching_start / approaching_time * delta
+			approaching_current -= approaching_start / approaching_time * delta
 			
 			if approaching_current >= 0:
 				unleash()
@@ -43,9 +45,24 @@ func toggle_state():
 		sprite_open.show()
 		sprite_close.hide()
 
-func _on_Door_input_event( viewport, event, shape_idx ):	
-	if event.is_action_pressed("use"):
+func _input(event):
+	if event.is_action_pressed("use") and mouse_over_door():
+		print("Door opened")
+		
+		get_tree().set_input_as_handled()
+		
 		if hunted:
 			unleash()
 		else:
 			emit_signal("used_door")
+
+func mouse_over_door():
+	var diff = collider.get_global_pos() - get_global_mouse_pos()
+	
+	# Collider spans 60 x 100
+	if abs(diff.x) <= 30 and abs(diff.y) <= 50:
+		return true
+	
+	#print("Trying to open door with: ", diff)
+	
+	return false

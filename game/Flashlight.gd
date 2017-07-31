@@ -1,5 +1,6 @@
 extends Light2D
 
+onready var sound = get_node("SamplePlayer2D")
 onready var anim = get_node("AnimationPlayer")
 
 export var batterie_length = 3
@@ -26,11 +27,15 @@ func _process(delta):
 
 func _unhandled_input(event):
 	if event.is_action_pressed("use") and batterie > 0:
+		print("Toggle flashlight")
+		
 		if on:
 			on = false
+			sound.play("click_off")
 			anim.play("light_off")
 		else:
 			on = true
+			sound.play("click_on")
 			anim.play("light_on")
 
 func _on_AnimationPlayer_animation_started( name ):

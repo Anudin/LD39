@@ -11,4 +11,4 @@ func _input(event):
 	if is_visible() and event.is_action_pressed("use"):
 		get_tree().set_input_as_handled()
 		hide()
-		get_parent().restart()
+		get_node("/root/Main").restart()

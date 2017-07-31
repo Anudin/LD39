@@ -1,35 +1,12 @@
-# something very bad happens if you click too fast...
-
-# Monster visuals
-
-# Sound
-# Footstep
-# Door open sound
-# Maybe bells
-# Maybe jumpscare
-
-# Possible game mechanic changes and additions:
-# make flashlight effect flashlight sized and focus on cursor! OR make monster faster upon use
-# limit flashlight energy per level?
-# light up level screen
-# Non linear monster speed
-
-# Level progression possibilities:
-# - More doors
-# - More rooms
-# - Faster monster
-# - Change timing and availability of flashlight
-
 extends Node2D
 
 var door_scn = preload("door/Door.tscn")
 
-onready var level_dock = get_node("LevelDock")
 onready var spawns_container
 onready var entrances_container
 onready var flashlight = get_node("Flashlight")
 onready var floodlight = get_node("Floodlight")
-onready var level_screen = get_node("LevelScreen")
+onready var level_screen = get_node("GUI/LevelScreen")
 
 # Level loading and progressing
 var level_data = [preload("level_data/Level1.tscn"),
@@ -50,14 +27,16 @@ func _ready():
 	set_fixed_process(true)
 
 func _fixed_process(delta):
-	get_node("HUD/Batterie").set_value(flashlight.batterie)
+	get_node("GUI/Batterie").set_value(flashlight.batterie)
 
 func generate_level():
 	room += 1
+	floodlight.flash()
 	
 	if room > level_inst.rooms_per_level and not level == level_data.size() - 1:
 		level += 1
 		room = 0
+		flashlight.refill_batteries()
 		show_level_screen()
 	
 	# nodes aren't freed fast enough so...
@@ -94,12 +73,13 @@ func generate_level():
 
 func on_monster_arrived():
 	room = 0
+	flashlight.refill_batteries()
 	
 	show_level_screen()
 	
 func show_level_screen():
-	floodlight.hide()
-	flashlight.hide()
+	#floodlight.hide()
+	#flashlight.hide()
 	
 	level_screen.get_node("LevelScreenLabel").set_text("LEVEL " + str(level + 1))
 	level_screen.show()
@@ -108,21 +88,23 @@ func show_level_screen():
 	get_tree().set_pause(true)
 
 func restart():
+	print("Starting level")
+	
 	load_level()
-	floodlight.show()
-	floodlight.flash()
-	flashlight.show()
 	get_tree().set_pause(false)
+	#floodlight.show()
+	#flashlight.show()
+	floodlight.flash()
 
 func load_level():
 	# Remove last level
-	var current_level = level_dock.get_node("Level")
+	var current_level = get_node("Level")
 	current_level.queue_free()
-	level_dock.remove_child(current_level)
+	remove_child(current_level)
 	
 	# Add new level
 	level_inst = level_data[level].instance()
-	level_dock.add_child(level_inst, true)
+	add_child(level_inst, true)
 	
 	# Setup logic
 	spawns_container = level_inst.get_node("Spawns")
