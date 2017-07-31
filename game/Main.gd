@@ -7,13 +7,14 @@ onready var entrances_container
 onready var flashlight = get_node("Flashlight")
 onready var level_screen = get_node("GUI/LevelScreen")
 
+var outro = preload("Outro.tscn")
+
 # Level loading and progressing
 var level_data = [preload("level_data/Level1.tscn"),
 					preload("level_data/Level2.tscn"),
 					preload("level_data/Level3.tscn"),
 					preload("level_data/Level4.tscn"),
-					preload("level_data/Level5.tscn"),
-					preload("level_data/Outro.tscn")]
+					preload("level_data/Level5.tscn")]
 
 onready var level_inst
 
@@ -48,11 +49,14 @@ func generate_level():
 	flashlight.force_out()
 	flashlight.flash()
 	
-	if room > level_inst.rooms_per_level and not level == level_data.size() - 1:
-		level += 1
-		room = 0
-		flashlight.refill_batteries()
-		show_level_screen()
+	if room > level_inst.rooms_per_level:
+		if not level == level_data.size() - 1:
+			level += 1
+			room = 0
+			flashlight.refill_batteries()
+			show_level_screen()
+		else:
+			get_tree().change_scene_to(outro)
 	
 	# nodes aren't freed fast enough so...
 	var prev_child_count = entrances_container.get_child_count()
