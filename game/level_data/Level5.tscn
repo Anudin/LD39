@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=1]
 
 [ext_resource path="res://level_data/Level5.gd" type="Script" id=1]
-[ext_resource path="res://level_data/backgrounds/level1_back.png" type="Texture" id=2]
+[ext_resource path="res://level_data/backgrounds/level5_back.png" type="Texture" id=2]
 
 [node name="Level" type="Node2D"]
 

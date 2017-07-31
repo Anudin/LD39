@@ -7,6 +7,7 @@ onready var collider = get_node("CollisionShape2D")
 onready var sprite_open = get_node("Open")
 onready var sprite_close = get_node("Close")
 onready var sound_effect_player = get_node("SoundEffectPlayer")
+onready var sound_timer = get_node("SoundTimer")
 
 var hunted = false
 var approaching_time = 3
@@ -20,10 +21,10 @@ func _ready():
 func _process(delta):
 	if hunted:
 		if not sound_effect_player.is_voice_active(0):
-			sound_effect_player.play("steps")
+			#sound_effect_player.play("steps")
 			pass
 		else:
-			approaching_current -= approaching_start / approaching_time * delta
+			#approaching_current -= approaching_start / approaching_time * delta
 			
 			if approaching_current >= 0:
 				unleash()
@@ -31,8 +32,6 @@ func _process(delta):
 			sound_effect_player.voice_set_volume_scale_db(0, approaching_current)
 
 func unleash():
-	sound_effect_player.stop_all()
-	sound_effect_player.play("open_door")
 	hunted = false
 	toggle_state()
 	emit_signal("monster_arrived")
@@ -51,10 +50,14 @@ func _input(event):
 		
 		get_tree().set_input_as_handled()
 		
+		sound_effect_player.stop_all()
+		sound_effect_player.play("open_door")
+		
 		if hunted:
 			unleash()
 		else:
-			emit_signal("used_door")
+			sound_timer.set_wait_time(0.66)
+			sound_timer.start()
 
 func mouse_over_door():
 	var diff = collider.get_global_pos() - get_global_mouse_pos()
@@ -66,3 +69,6 @@ func mouse_over_door():
 	#print("Trying to open door with: ", diff)
 	
 	return false
+
+func _on_SoundTimer_timeout():
+	emit_signal("used_door")

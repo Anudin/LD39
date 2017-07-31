@@ -72,8 +72,17 @@ params/pitch_scale = 1.0
 params/attenuation/min_distance = 1.0
 params/attenuation/max_distance = 2048.0
 params/attenuation/distance_exp = 1.0
-config/polyphony = 1
+config/polyphony = 2
 config/samples = SubResource( 2 )
 config/pitch_random = 0.0
+
+[node name="SoundTimer" type="Timer" parent="."]
+
+process_mode = 1
+wait_time = 1.0
+one_shot = false
+autostart = false
+
+[connection signal="timeout" from="SoundTimer" to="." method="_on_SoundTimer_timeout"]
 
 
