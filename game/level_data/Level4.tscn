@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=1]
+[gd_scene load_steps=4 format=1]
 
 [ext_resource path="res://level_data/Level4.gd" type="Script" id=1]
 [ext_resource path="res://level_data/backgrounds/level4_back.png" type="Texture" id=2]
+[ext_resource path="res://level_data/backgrounds/level1_fore.png" type="Texture" id=3]
 
 [node name="Level" type="Node2D"]
 
@@ -43,5 +44,10 @@ transform/pos = Vector2( 356, 376 )
 transform/pos = Vector2( 924, 376 )
 
 [node name="Entrances" type="Node2D" parent="."]
+
+[node name="Foreground" type="Sprite" parent="."]
+
+texture = ExtResource( 3 )
+centered = false
 
 
