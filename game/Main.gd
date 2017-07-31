@@ -5,7 +5,6 @@ var door_scn = preload("door/Door.tscn")
 onready var spawns_container
 onready var entrances_container
 onready var flashlight = get_node("Flashlight")
-onready var floodlight = get_node("Floodlight")
 onready var level_screen = get_node("GUI/LevelScreen")
 
 # Level loading and progressing
@@ -24,14 +23,17 @@ func _ready():
 	randomize()
 	
 	show_level_screen()
+	
 	set_fixed_process(true)
 
 func _fixed_process(delta):
 	get_node("GUI/Batterie").set_value(flashlight.batterie)
 
 func generate_level():
+	print("generating")
+	
 	room += 1
-	floodlight.flash()
+	flashlight.flash()
 	flashlight.force_out()
 	
 	if room > level_inst.rooms_per_level and not level == level_data.size() - 1:
@@ -95,7 +97,7 @@ func restart():
 	
 	load_level()
 	get_tree().set_pause(false)
-	floodlight.flash()
+	flashlight.flash()
 
 func load_level():
 	# Remove last level

@@ -21,14 +21,11 @@ func _process(delta):
 			batterie = 0
 			on = false
 			anim.play("light_off")
-	
-	if follow:
-		set_pos(get_global_mouse_pos())
+		
+		set_pos(get_global_mouse_pos())		
 
 func _unhandled_input(event):
 	if event.is_action_pressed("use") and batterie > 0:
-		print("Toggle flashlight")
-		
 		if on:
 			on = false
 			sound.play("click_off")
@@ -38,13 +35,6 @@ func _unhandled_input(event):
 			sound.play("click_on")
 			anim.play("light_on")
 
-func _on_AnimationPlayer_animation_started( name ):
-	follow = false
-	set_pos(Vector2(-1280, 0))
-
-func _on_AnimationPlayer_finished():
-	follow = true
-
 func refill_batteries():
 	batterie = 100
 	force_out()
@@ -52,3 +42,10 @@ func refill_batteries():
 func force_out():
 	on = false
 	set_color(Color(0))
+
+func flash():
+	anim.play("flash")
+
+func _on_AnimationPlayer_animation_started( name ):
+	if name == "flash":
+		set_pos(Vector2(640, 360))

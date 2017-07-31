@@ -66,7 +66,7 @@ func mouse_over_door():
 	if abs(diff.x) <= 60 and abs(diff.y) <= 100:
 		return true
 	
-	print("Trying to open door with: ", diff)
+	#print("Trying to open door with: ", diff)
 	
 	return false
 

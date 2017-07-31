@@ -9,6 +9,8 @@ func _ready():
 
 func _input(event):
 	if is_visible() and event.is_action_pressed("use"):
+		print("Level screen swallowing input")
+		
 		get_tree().set_input_as_handled()
 		hide()
 		get_node("/root/Main").restart()
