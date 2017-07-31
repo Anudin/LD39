@@ -20,6 +20,9 @@ func _ready():
 	set_process(true)
 	set_process_input(true)
 
+func set_audio_offset(val):
+	sound_effect_player.set_pos(Vector2(val, 0))
+
 func _process(delta):
 	if hunted:
 		if not sound_effect_player.is_voice_active(0):

@@ -61,8 +61,6 @@ func generate_level():
 	# nodes aren't freed fast enough so...
 	var prev_child_count = entrances_container.get_child_count()
 	
-	# here's the bug
-	# queue free acts with a delay
 	for child in entrances_container.get_children():
 		child.queue_free()
 	
@@ -77,7 +75,11 @@ func generate_level():
 		
 		var door = door_scn.instance()
 		door.set_pos(spawns[spawn_point].get_pos())
+		
 		entrances_container.add_child(door)
+		
+		if spawns[spawn_point].has_node("AudioOffset"):
+			door.set_audio_offset(spawns[spawn_point].get_node("AudioOffset").get_pos().x)
 		
 		# fucking signals
 		door.connect("used_door", self, "generate_level")

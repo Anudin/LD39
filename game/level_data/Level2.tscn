@@ -19,6 +19,10 @@ centered = false
 
 transform/pos = Vector2( 92, 688 )
 
+[node name="AudioOffset" type="Position2D" parent="Spawns/Spawn1"]
+
+transform/pos = Vector2( -300, 0 )
+
 [node name="Spawn2" type="Position2D" parent="Spawns"]
 
 transform/pos = Vector2( 652, 688 )
@@ -26,6 +30,10 @@ transform/pos = Vector2( 652, 688 )
 [node name="Spawn3" type="Position2D" parent="Spawns"]
 
 transform/pos = Vector2( 1188, 688 )
+
+[node name="AudioOffset" type="Position2D" parent="Spawns/Spawn3"]
+
+transform/pos = Vector2( 300, 0 )
 
 [node name="Entrances" type="Node2D" parent="."]
 
