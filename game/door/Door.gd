@@ -11,22 +11,27 @@ onready var sound_timer = get_node("SoundTimer")
 
 var hunted = false
 var approaching_time = 3
-var approaching_start = -25
-var approaching_current = -25
+var approaching_start = -35
+var approaching_current
 
 func _ready():
+	approaching_current = approaching_start
+	
 	set_process(true)
 	set_process_input(true)
 
 func _process(delta):
 	if hunted:
 		if not sound_effect_player.is_voice_active(0):
-			#sound_effect_player.play("steps")
+			sound_effect_player.play("steps")
 			pass
 		else:
-			#approaching_current -= approaching_start / approaching_time * delta
+			approaching_current -= (approaching_start / approaching_time) * delta
 			
 			if approaching_current >= 0:
+				sound_effect_player.stop_all()
+				sound_effect_player.play("open_door")
+				
 				unleash()
 			
 			sound_effect_player.voice_set_volume_scale_db(0, approaching_current)

@@ -24,7 +24,11 @@ func _ready():
 	
 	show_level_screen()
 	
+	set_process(true)
 	set_fixed_process(true)
+
+func _process(delta):
+	get_node("AmbientMusic").set_volume(1 - flashlight.get_color().r * .75)
 
 func _fixed_process(delta):
 	get_node("GUI/Batterie").set_value(flashlight.batterie)
