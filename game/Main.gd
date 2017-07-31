@@ -21,6 +21,8 @@ onready var level_inst
 var level = 0
 var room = 0
 
+var hunted
+
 func _ready():
 	randomize()
 	
@@ -91,6 +93,8 @@ func generate_level():
 	var hunted_index = prev_child_count + randi() % (entrances.size() - prev_child_count)
 	entrances[hunted_index].hunted = true
 	entrances[hunted_index].approaching_time = level_inst.monster_speed
+	
+	hunted = true
 
 func on_monster_arrived():
 	get_node("SamplePlayer2D").play("game_over")

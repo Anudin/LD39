@@ -28,12 +28,14 @@ func _process(delta):
 		if not sound_effect_player.is_voice_active(0):
 			sound_effect_player.play("steps")
 			pass
-		else:
+		elif get_node("/root/Main").hunted:
 			approaching_current -= (approaching_start / approaching_time) * delta
 			
 			if approaching_current >= 0:
 				sound_effect_player.stop_all()
 				sound_effect_player.play("open_door")
+				
+				print("unleashed")
 				
 				unleash()
 			
@@ -54,8 +56,6 @@ func toggle_state():
 
 func _input(event):
 	if event.is_action_pressed("use") and mouse_over_door():
-		print("Door opened")
-		
 		get_tree().set_input_as_handled()
 		
 		sound_effect_player.stop_all()
@@ -64,6 +64,8 @@ func _input(event):
 		if hunted:
 			unleash()
 		else:
+			get_node("/root/Main").hunted = false
+			
 			sound_timer.set_wait_time(0.66)
 			sound_timer.start()
 
