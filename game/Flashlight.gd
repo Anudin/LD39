@@ -1,5 +1,7 @@
 extends Light2D
 
+signal batterie_value_changed
+
 onready var sound = get_node("SamplePlayer2D")
 onready var anim = get_node("AnimationPlayer")
 
@@ -16,6 +18,8 @@ func _ready():
 func _process(delta):
 	if on:
 		batterie -= delta * (100 / batterie_length)
+		
+		emit_signal("batterie_value_changed", batterie)
 		
 		if batterie <= 0:
 			batterie = 0

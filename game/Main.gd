@@ -2,42 +2,39 @@ extends Node2D
 
 var door_scn = preload("door/Door.tscn")
 
-onready var spawns_container
-onready var entrances_container
-onready var flashlight = get_node("Flashlight")
 onready var level_screen = get_node("GUI/LevelScreen")
+onready var flashlight = get_node("Flashlight")
+onready var sfx_manager = get_node("SFXManager")
 
 var outro = preload("Outro.tscn")
 
-# Level loading and progressing
+# Level data and current instance
 var level_data = [preload("level_data/Level1.tscn"),
 					preload("level_data/Level2.tscn"),
 					preload("level_data/Level3.tscn"),
 					preload("level_data/Level4.tscn"),
 					preload("level_data/Level5.tscn")]
 
-onready var level_inst
+var level_inst
 
+# Progress information
 var level = 0
 var room = 0
 
+# Ugly hack
 var hunted
 
 func _ready():
 	randomize()
 	
-	get_node("GUI/Batterie").set_value(flashlight.batterie)
+	flashlight.connect("batterie_value_changed", get_node("GUI/Batterie"), "set_value")
 	
 	show_level_screen()
 	
 	set_process(true)
-	set_fixed_process(true)
 
 func _process(delta):
 	get_node("AmbientMusic").set_volume(1 - flashlight.get_color().r * .75)
-
-func _fixed_process(delta):
-	get_node("GUI/Batterie").set_value(flashlight.batterie)
 
 func generate_level():
 	print("generating")
@@ -56,13 +53,13 @@ func generate_level():
 			get_tree().change_scene_to(outro)
 	
 	# nodes aren't freed fast enough so...
-	var prev_child_count = entrances_container.get_child_count()
+	var prev_child_count = level_inst.get_node("Entrances").get_child_count()
 	
-	for child in entrances_container.get_children():
+	for child in level_inst.get_node("Entrances").get_children():
 		child.queue_free()
 	
 	# Spawn doors in current room
-	var spawns = spawns_container.get_children()
+	var spawns = level_inst.get_node("Spawns").get_children()
 	var spawn_locations = range(spawns.size())
 	
 	for i in range(level_inst.doors_per_room):
@@ -73,7 +70,7 @@ func generate_level():
 		var door = door_scn.instance()
 		door.set_pos(spawns[spawn_point].get_pos())
 		
-		entrances_container.add_child(door)
+		level_inst.get_node("Entrances").add_child(door)
 		
 		if spawns[spawn_point].has_node("AudioOffset"):
 			door.set_audio_offset(spawns[spawn_point].get_node("AudioOffset").get_pos().x)
@@ -83,7 +80,7 @@ func generate_level():
 		door.connect("monster_arrived", self, "on_monster_arrived")
 	
 	# Let a random door be hunted
-	var entrances = entrances_container.get_children()
+	var entrances = level_inst.get_node("Entrances").get_children()
 	
 	var hunted_index = prev_child_count + randi() % (entrances.size() - prev_child_count)
 	entrances[hunted_index].hunted = true
@@ -92,7 +89,7 @@ func generate_level():
 	hunted = true
 
 func on_monster_arrived():
-	get_node("SamplePlayer2D").play("game_over")
+	sfx_manager.play("game_over")
 	room = 0
 	flashlight.refill_batteries()
 	
@@ -105,14 +102,15 @@ func show_level_screen(monster_arrived = false):
 	level_screen.show()
 	
 	if not monster_arrived:
-		get_node("SamplePlayer2D").play("churchbell")
+		sfx_manager.play("churchbell")
 	
 	get_tree().set_pause(true)
 
 func restart():
 	print("Starting level")
 	flashlight.show()
-	get_node("SamplePlayer2D").stop_all()
+	# Why is this needed
+	get_node("SFXManager").stop_all()
 	
 	load_level()
 	get_tree().set_pause(false)
@@ -129,9 +127,5 @@ func load_level():
 	# Add new level
 	level_inst = level_data[level].instance()
 	add_child(level_inst, true)
-	
-	# Setup logic
-	spawns_container = level_inst.get_node("Spawns")
-	entrances_container = level_inst.get_node("Entrances")
 	
 	generate_level()
