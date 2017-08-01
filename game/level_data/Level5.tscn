@@ -45,7 +45,7 @@ transform/pos = Vector2( 924, 376 )
 
 [node name="Entrances" type="Node2D" parent="."]
 
-[node name="StreamPlayer" type="StreamPlayer" parent="."]
+[node name="AdditionalAmbientMusic" type="StreamPlayer" parent="."]
 
 stream/stream = ExtResource( 3 )
 stream/play = false

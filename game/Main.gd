@@ -1,12 +1,14 @@
+# Fix "ugly hack"
+# Freeing of old levels
+
 extends Node2D
 
 var door_scn = preload("door/Door.tscn")
+var outro = preload("Outro.tscn")
 
 onready var level_screen = get_node("GUI/LevelScreen")
-onready var flashlight = get_node("Flashlight")
+onready var light = get_node("Light")
 onready var sfx_manager = get_node("SFXManager")
-
-var outro = preload("Outro.tscn")
 
 # Level data and current instance
 var level_data = [preload("level_data/Level1.tscn"),
@@ -27,27 +29,27 @@ var hunted
 func _ready():
 	randomize()
 	
-	flashlight.connect("batterie_value_changed", get_node("GUI/Batterie"), "set_value")
+	light.connect("batterie_value_changed", get_node("GUI/Batterie"), "set_value")
 	
 	show_level_screen()
 	
 	set_process(true)
 
 func _process(delta):
-	get_node("AmbientMusic").set_volume(1 - flashlight.get_color().r * .75)
+	get_node("AmbientMusic").set_volume(1 - light.get_color().r * .75)
 
 func generate_level():
-	print("generating")
+	print("generate_level")
 	
 	room += 1
-	flashlight.force_out()
-	flashlight.flash()
+	light.force_out()
+	light.flash()
 	
 	if room > level_inst.rooms_per_level:
 		if not level == level_data.size() - 1:
 			level += 1
 			room = 0
-			flashlight.refill_batteries()
+			light.refill_batteries()
 			show_level_screen()
 		else:
 			get_tree().change_scene_to(outro)
@@ -91,14 +93,14 @@ func generate_level():
 func on_monster_arrived():
 	sfx_manager.play("game_over")
 	room = 0
-	flashlight.refill_batteries()
+	light.refill_batteries()
 	
 	show_level_screen(true)
 	
 func show_level_screen(monster_arrived = false):
-	flashlight.hide()
+	light.hide()
 	
-	level_screen.get_node("LevelScreenLabel").set_text("LEVEL " + str(level + 1))
+	level_screen.get_node("Label").set_text("LEVEL " + str(level + 1))
 	level_screen.show()
 	
 	if not monster_arrived:
@@ -106,15 +108,17 @@ func show_level_screen(monster_arrived = false):
 	
 	get_tree().set_pause(true)
 
-func restart():
-	print("Starting level")
-	flashlight.show()
-	# Why is this needed
+func start_level():
+	print("start_level")
+ 
+	# Stop effects so they don't disrupt gameplay
 	get_node("SFXManager").stop_all()
 	
 	load_level()
+	light.show()
+	light.flash()
+	
 	get_tree().set_pause(false)
-	flashlight.flash()
 
 func load_level():
 	# Remove last level
