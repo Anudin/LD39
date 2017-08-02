@@ -80,7 +80,7 @@ config/pitch_random = 0.0
 
 process_mode = 1
 wait_time = 1.0
-one_shot = false
+one_shot = true
 autostart = false
 
 [connection signal="timeout" from="SoundTimer" to="." method="_on_SoundTimer_timeout"]
