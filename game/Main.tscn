@@ -177,7 +177,6 @@ percent/visible = true
 [node name="LevelScreen" type="Control" parent="GUI"]
 
 process/pause_mode = 2
-editor/display_folded = true
 visibility/visible = false
 focus/ignore_mouse = false
 focus/stop_mouse = true
@@ -215,7 +214,6 @@ max_lines_visible = -1
 
 [node name="Light" type="Light2D" parent="."]
 
-editor/display_folded = true
 transform/pos = Vector2( 640, 360 )
 enabled = true
 editor_only = false

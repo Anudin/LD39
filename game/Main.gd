@@ -1,10 +1,28 @@
-# Fix "ugly hack"
+# Rewrite tutorial
+#	-> Add flashlight energy
+
+# Audio setup screen
+#	-> max + min setup
+# with correct use of UI nodes
+
+# Add monster close audio clue
+# Add random amount of silence
+# Maybe add a screen tearing shader
+
+# === POST LD
+# Remove flashlight - keep small ambient light
+# 	-> only black out doors?
+# Add movement / graphic cues for enemy
+
+# === POST LD - OPTIONAL
+# Remove door timer
 # Freeing of old levels
 
 extends Node2D
 
 var door_scn = preload("door/Door.tscn")
-var outro = preload("Outro.tscn")
+var enemy_scn = preload("enemy/Enemy.tscn")
+var outro_scn = preload("Outro.tscn")
 
 onready var level_screen = get_node("GUI/LevelScreen")
 onready var light = get_node("Light")
@@ -23,12 +41,10 @@ var level_inst
 var level = 0
 var room = 0
 
-# Ugly hack
-var hunted
-
 func _ready():
 	randomize()
-	
+
+	# Setup status bar for flashlight batteries
 	light.connect("batterie_value_changed", get_node("GUI/Batterie"), "set_value")
 	
 	show_level_screen()
@@ -37,6 +53,8 @@ func _ready():
 
 func _process(delta):
 	get_node("AmbientMusic").set_volume(1 - light.get_color().r * .75)
+
+var enemy
 
 func generate_level():
 	print("generate_level")
@@ -47,12 +65,15 @@ func generate_level():
 	
 	if room > level_inst.rooms_per_level:
 		if not level == level_data.size() - 1:
+			enemy.chase = false
 			level += 1
 			room = 0
 			light.refill_batteries()
 			show_level_screen()
+
+			return
 		else:
-			get_tree().change_scene_to(outro)
+			get_tree().change_scene_to(outro_scn)
 	
 	# nodes aren't freed fast enough so...
 	var prev_child_count = level_inst.get_node("Entrances").get_child_count()
@@ -75,20 +96,19 @@ func generate_level():
 		level_inst.get_node("Entrances").add_child(door)
 		
 		if spawns[spawn_point].has_node("AudioOffset"):
-			door.set_audio_offset(spawns[spawn_point].get_node("AudioOffset").get_pos().x)
+			door.audio_offset = spawns[spawn_point].get_node("AudioOffset").get_pos().x
 		
 		# fucking signals
 		door.connect("used_door", self, "generate_level")
-		door.connect("monster_arrived", self, "on_monster_arrived")
 	
 	# Let a random door be hunted
 	var entrances = level_inst.get_node("Entrances").get_children()
 	
 	var hunted_index = prev_child_count + randi() % (entrances.size() - prev_child_count)
-	entrances[hunted_index].hunted = true
-	entrances[hunted_index].approaching_time = level_inst.monster_speed
-	
-	hunted = true
+	enemy = enemy_scn.instance()
+	enemy.time_until_arrival = level_inst.monster_speed
+	enemy.connect("monster_arrived", self, "on_monster_arrived")
+	entrances[hunted_index].add_child(enemy, true)
 
 func on_monster_arrived():
 	sfx_manager.play("game_over")

@@ -1,50 +1,21 @@
 extends Node2D
 
 signal used_door
-signal monster_arrived
 
-onready var collider = get_node("CollisionShape2D")
 onready var sprite_open = get_node("Open")
 onready var sprite_close = get_node("Close")
 onready var sound_effect_player = get_node("SoundEffectPlayer")
 onready var sound_timer = get_node("SoundTimer")
 
-var hunted = false
-var approaching_time = 3
-var approaching_start = -35
-var approaching_current
+var audio_offset = 0
 
 func _ready():
-	approaching_current = approaching_start
-	
-	set_process(true)
 	set_process_input(true)
 
-func set_audio_offset(val):
-	sound_effect_player.set_pos(Vector2(val, 0))
-
-func _process(delta):
-	if hunted:
-		if not sound_effect_player.is_voice_active(0):
-			sound_effect_player.play("steps")
-			pass
-		elif get_node("/root/Main").hunted:
-			approaching_current -= (approaching_start / approaching_time) * delta
-			
-			if approaching_current >= 0:
-				sound_effect_player.stop_all()
-				sound_effect_player.play("open_door")
-				
-				print("unleashed")
-				
-				unleash()
-			
-			sound_effect_player.voice_set_volume_scale_db(0, approaching_current)
-
-func unleash():
-	hunted = false
+func open():
+	sound_effect_player.stop_all()
+	sound_effect_player.play("open_door")
 	toggle_state()
-	emit_signal("monster_arrived")
 
 func toggle_state():
 	if sprite_open.is_visible():
@@ -58,27 +29,42 @@ func _input(event):
 	if event.is_action_pressed("use") and mouse_over_door():
 		get_tree().set_input_as_handled()
 		
-		sound_effect_player.stop_all()
-		sound_effect_player.play("open_door")
-		
-		if hunted:
-			unleash()
-		else:
-			get_node("/root/Main").hunted = false
-			
-			sound_timer.set_wait_time(0.66)
-			sound_timer.start()
+		open()
 
+		# Ugly hack
+		var enemy = get_node("/root/Main").enemy
+
+		if enemy != null:
+			enemy.chase = false
+
+		if has_node("Enemy"):
+			get_node("Enemy").emit_signal("monster_arrived")
+		else:
+			sound_timer.set_wait_time(0.66)
+			sound_timer.start()	
+
+# Manual check is needed since Area2Ds input method is called
+# after _input and _unhandled_input
 func mouse_over_door():
-	var diff = collider.get_global_pos() - get_global_mouse_pos()
+	var diff = (get_pos() + sprite_open.get_offset()) - get_global_mouse_pos()
 	
-	# Collider spans 60 x 100
+	# Sprite spans 60 x 100
 	if abs(diff.x) <= 60 and abs(diff.y) <= 100:
 		return true
-	
-	#print("Trying to open door with: ", diff)
-	
+
 	return false
 
 func _on_SoundTimer_timeout():
+	print("emiting: used_door...")
+
 	emit_signal("used_door")
+
+func unleash():
+	get_node("Enemy").queue_free()
+	remove_child(get_node("Enemy"))
+
+func reset_state():
+	sprite_open.hide()
+	sprite_close.show()
+	
+	sound_effect_player.stop_all()

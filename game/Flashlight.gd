@@ -9,7 +9,6 @@ export var batterie_length = 3
 var batterie = 100
 
 var on = false
-var follow = false
 
 func _ready():
 	set_process(true)
@@ -19,13 +18,14 @@ func _process(delta):
 	if on:
 		batterie -= delta * (100 / batterie_length)
 		
-		emit_signal("batterie_value_changed", batterie)
-		
 		if batterie <= 0:
 			batterie = 0
 			on = false
 			anim.play("light_off")
 		
+		emit_signal("batterie_value_changed", batterie)
+
+		print(anim.get_current_animation())
 		set_pos(get_global_mouse_pos())		
 
 func _unhandled_input(event):
@@ -52,4 +52,5 @@ func flash():
 
 func _on_AnimationPlayer_animation_started( name ):
 	if name == "flash":
+		on = false
 		set_pos(Vector2(640, 360))
