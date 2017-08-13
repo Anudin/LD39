@@ -1,6 +1,3 @@
-# Rewrite tutorial
-#	-> Add flashlight energy
-
 # Audio setup screen
 #	-> max + min setup
 # with correct use of UI nodes

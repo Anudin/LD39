@@ -4,7 +4,7 @@ func _ready():
 	set_process_input(true)
 
 func _input(event):
-	if is_visible() and event.is_action_pressed("use"):
+	if is_visible() and event.type == InputEvent.SCREEN_TOUCH and not event.is_pressed():
 		print("LevelScreen _input")
 		
 		get_tree().set_input_as_handled()
